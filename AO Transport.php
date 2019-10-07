@@ -25,6 +25,11 @@ class AlertOps extends Transport
 {
     public function deliverAlert($obj, $opts)
     {
+        if ($obj['state'] == 0) {
+            $obj['event_type'] = 'close';
+        } else {
+            $obj['event_type'] = 'open';
+        }
         if (!empty($this->config)) {
             $opts['url'] = $this->config['AO-url'];
         }
@@ -43,7 +48,7 @@ class AlertOps extends Transport
         $ret  = curl_exec($curl);
         $code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         if ($code != 200) {
-            var_dump("Error when sending post request to AlertOps. Response code: " . $code . " Response body: " . $ret); 
+            var_dump("Error when sending post request to AlertOps. Response code: " . $code . " Response body: " . $ret);
             return false;
         }
         return true;
@@ -65,3 +70,5 @@ class AlertOps extends Transport
         ];
     }
 }
+
+
