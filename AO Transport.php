@@ -26,9 +26,9 @@ class AlertOps extends Transport
     public function deliverAlert($obj, $opts)
     {
         if ($obj['state'] == 0) {
-            $obj['event_type'] = 'close';
+            $obj['alert_status'] = 'close';
         } else {
-            $obj['event_type'] = 'open';
+            $obj['alert_status'] = 'open';
         }
         if (!empty($this->config)) {
             $opts['url'] = $this->config['AO-url'];
